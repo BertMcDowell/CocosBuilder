@@ -51,6 +51,16 @@
     return self;
 }
 
+- (void) addCallbackAtTime:(float) time
+{
+    [self addKeyframeAtRow:0 sub:0 time:time];
+}
+
+- (void) addSoundAtTime:(float) time
+{
+    [self addKeyframeAtRow:1 sub:0 time:time];
+}
+
 - (float) activeWidth
 {
     return [[SequencerHandler sharedHandler].outlineHierarchy tableColumnWithIdentifier:@"sequencer"].width;

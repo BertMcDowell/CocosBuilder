@@ -65,6 +65,7 @@
 #import "WarningsWindow.h"
 #import "TaskStatusWindow.h"
 #import "SequencerHandler.h"
+#import "SequencerScrubberSelectionView.h"
 #import "MainWindow.h"
 #import "CCNode+NodeInfo.h"
 #import "SequencerNodeProperty.h"
@@ -3512,6 +3513,18 @@ static BOOL hideAllToNextSeparator;
     [sequenceHandler menuAddKeyframeNamed:[self keyframePropNameFromTag:tag]];
 }
 
+- (IBAction)menuAddCallbackKeyframe:(id)sender
+{
+    [scrubberSelectionView addCallbackAtTime:sequenceHandler.currentSequence.timelinePosition];
+    [scrubberSelectionView setNeedsDisplay:TRUE];
+}
+
+- (IBAction)menuAddSoundKeyframe:(id)sender
+{
+    [scrubberSelectionView addSoundAtTime:sequenceHandler.currentSequence.timelinePosition];
+    [scrubberSelectionView setNeedsDisplay:TRUE];
+}
+
 - (IBAction)menuJavaScriptControlled:(id)sender
 {
     [self saveUndoStateWillChangeProperty:@"*javascriptcontrolled"];
@@ -3521,8 +3534,19 @@ static BOOL hideAllToNextSeparator;
     [self updateInspectorFromSelection];
 }
 
+-(BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
+{
+    if (toolbarItem.action == @selector(menuPublishProject:))
+    {
+        return self.projectSettings != NULL;
+    }
+    
+    return hasOpenedDocument;
+}
+
 - (BOOL) validateMenuItem:(NSMenuItem *)menuItem
 {
+//    NSLog(@"validateMenuItem : %@", menuItem.title);
     if (menuItem.action == @selector(saveDocument:)) return hasOpenedDocument;
     else if (menuItem.action == @selector(saveDocumentAs:)) return hasOpenedDocument;
     else if (menuItem.action == @selector(saveAllDocuments:)) return hasOpenedDocument;
@@ -3548,6 +3572,14 @@ static BOOL hideAllToNextSeparator;
         if (!hasOpenedDocument) return NO;
         if (!self.selectedNode) return NO;
         return [sequenceHandler canInsertKeyframeNamed:[self keyframePropNameFromTag:menuItem.tag]];
+    }
+    else if (menuItem.action == @selector(menuAddCallbackKeyframe:))
+    {
+        return hasOpenedDocument;
+    }
+    else if (menuItem.action == @selector(menuAddSoundKeyframe:))
+    {
+        return hasOpenedDocument;
     }
     else if (menuItem.action == @selector(menuSetCanvasBorder:))
     {

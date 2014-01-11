@@ -82,4 +82,7 @@ enum
 
 @property (nonatomic,retain) NSEvent* lastDragEvent;
 
+- (void) addCallbackAtTime:(float) time;
+- (void) addSoundAtTime:(float) time;
+
 @end

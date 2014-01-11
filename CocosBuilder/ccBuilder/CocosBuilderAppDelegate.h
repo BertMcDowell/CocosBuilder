@@ -329,6 +329,9 @@ enum {
 - (IBAction) menuOpenResourceManager:(id)sender;
 - (void) reloadResources;
 - (IBAction)menuAddStickyNote:(id)sender;
+- (IBAction)menuAddKeyframe:(id)sender;
+- (IBAction)menuAddCallbackKeyframe:(id)sender;
+- (IBAction)menuAddSoundKeyframe:(id)sender;
 - (IBAction) menuCleanCacheDirectories:(id)sender;
 - (IBAction)menuAbout:(id)sender;
 
