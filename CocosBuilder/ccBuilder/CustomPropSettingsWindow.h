@@ -25,13 +25,19 @@
 #import "CCBModalSheetController.h"
 #import "cocos2d.h"
 
+@class CustomPropSettings;
+
 @interface CustomPropSettingsWindow : CCBModalSheetController
 {
-    NSMutableArray* settings;
+    CustomPropSettings* settings;
     CCNode* node;
+
+    IBOutlet NSOutlineView * outline;
+    NSArray * indexpaths;
 }
 
-@property (nonatomic,retain) NSMutableArray* settings;
+@property (nonatomic,readonly) CustomPropSettings* settings;
+@property (nonatomic, retain) NSArray* selectionIndexPaths;
 
 - (void) copySettingsForNode:(CCNode*)n;
 

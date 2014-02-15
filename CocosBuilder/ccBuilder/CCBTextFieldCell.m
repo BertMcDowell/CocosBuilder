@@ -36,7 +36,11 @@
 
 - (NSColor *)textColor
 {
-    if (self.controlView == self.controlView.window.firstResponder)
+    if (!self.isEnabled || !self.isEditable)
+    {
+        return [NSColor grayColor];
+    }
+    else if (self.controlView == self.controlView.window.firstResponder)
     {
         // Is being edited
         

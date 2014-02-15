@@ -665,27 +665,26 @@
     info.customProperties = customProperties;
 }
 
-- (NSString*) customPropertyNamed:(NSString*)name
+- (CustomPropSetting*) customPropertyWithName:(NSString*)name
 {
     for (CustomPropSetting* setting in self.customProperties)
     {
         if ([setting.name isEqualToString:name])
         {
-            return setting.value;
+            return setting;
         }
     }
     return NULL;
 }
 
+- (NSString*) customPropertyNamed:(NSString*)name
+{
+    return [[self customPropertyWithName:name] value];
+}
+
 - (void) setCustomPropertyNamed:(NSString*)name value:(NSString*)value
 {
-    for (CustomPropSetting* setting in self.customProperties)
-    {
-        if ([setting.name isEqualToString:name])
-        {
-            setting.value = value;
-        }
-    }
+    [[self customPropertyWithName:name] setValue:value];
 }
 
 - (id) serializeCustomProperties

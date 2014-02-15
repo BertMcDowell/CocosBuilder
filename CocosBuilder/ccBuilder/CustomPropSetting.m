@@ -29,6 +29,7 @@
 @synthesize name;
 @synthesize type;
 @synthesize optimized;
+@synthesize parent = parent;
 
 - (id) init
 {
@@ -38,7 +39,7 @@
     self.name = @"myCustomProperty";
     self.type = kCCBCustomPropTypeInt;
     self.optimized = NO;
-    self.value = @"0";
+    self.object = [NSNumber numberWithInt:0];
     
     return self;
 }
@@ -51,7 +52,7 @@
     self.name = [ser objectForKey:@"name"];
     self.type = [[ser objectForKey:@"type"] intValue];
     self.optimized = [[ser objectForKey:@"optimized"] boolValue];
-    self.value = [ser objectForKey:@"value"];
+    //self.value = [ser objectForKey:@"value"];
     
     return self;
 }
@@ -63,7 +64,7 @@
     [ser setObject:name forKey:@"name"];
     [ser setObject:[NSNumber numberWithInt:type] forKey:@"type"];
     [ser setObject:[NSNumber numberWithBool:optimized] forKey:@"optimized"];
-    [ser setObject:value forKey:@"value"];
+    //[ser setObject:value forKey:@"value"];
     
     return ser;
 }
@@ -71,30 +72,32 @@
 - (void) dealloc
 {
     self.name = NULL;
-    self.value = NULL;
+    self.parent = NULL;
+    self.object = NULL;
     [super dealloc];
 }
 
-- (NSString*) formatValue:(NSString*) val
+- (NSObject*) formatValue:(NSString*) val
 {
     if (type == kCCBCustomPropTypeInt)
     {
-        int n = [val intValue];
-        return [NSString stringWithFormat:@"%d",n];
+        return [NSNumber numberWithInt:[val intValue]];
     }
     else if (type == kCCBCustomPropTypeFloat)
     {
-        float f = [val floatValue];
-        return [NSString stringWithFormat:@"%f",f];
+        return [NSNumber numberWithFloat:[val floatValue]];
     }
     else if (type == kCCBCustomPropTypeBool)
     {
-        BOOL b = [val boolValue];
-        return [NSString stringWithFormat:@"%d", b];
+        return [NSNumber numberWithBool:[val boolValue]];
     }
     else if (type == kCCBCustomPropTypeString)
     {
         return val;
+    }
+    else if (type == kCCBCustomPropTypeArray)
+    {
+        return [NSMutableArray array];
     }
     else
     {
@@ -103,30 +106,84 @@
     }
 }
 
+- (NSObject*) object
+{
+    return object;
+}
+
+- (void) setObject:(NSObject *)obj
+{
+    [object release];
+    object = [obj retain];
+}
+
+- (NSMutableArray*) children
+{
+    return Obj_Cast(object, NSMutableArray);
+}
+
+- (int) childrenCount
+{
+    return [[self children] count];
+}
+
+- (BOOL) isLeaf
+{
+    return [self children] == NULL;
+}
+
+- (BOOL) nameEditable
+{
+    return parent == NULL;
+}
+
+- (BOOL) valueEditable
+{
+    return [self children] == NULL;
+}
+
 - (void) setType:(int)t
 {
     if (t == type) return;
     
+    NSString * val = self.value;
+    BOOL wasLeaf = self.isLeaf;
+    
     type = t;
     
-    self.value = self.value;
+    self.value = val;
+    
+    // Post an event to reload the data when we change leaf state
+    // as the outline view does not seem to check this all the time :(
+    if (wasLeaf != self.isLeaf)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CustomPropSettingsTypeChanged" object:self];
+    }
 }
 
 - (void) setValue:(NSString *)val
 {
-    if (!val) val = @"";
-    
-    NSString* newVal = [self formatValue:val];
-    if (newVal == value) return;
-    
-    [value release];
-    value = [newVal retain];
+    self.object = [self formatValue:val];
 }
 
 - (NSString*) value
 {
-    if (!value) return [self formatValue: @""];
-    return value;
+    if (object)
+    {
+        switch (type) {
+            case kCCBCustomPropTypeArray:
+            {
+                NSMutableArray* obj = Obj_Cast(object, NSMutableArray);
+                assert(obj);
+                return [NSString stringWithFormat:@"(%lu items)", (unsigned long)[obj count]];
+                break;
+            }
+            default:
+                return [NSString stringWithFormat:@"%@", object];
+                break;
+        }
+    }
+    return @"";
 }
 
 - (id) copyWithZone:(NSZone*)zone
@@ -136,9 +193,24 @@
     copy.name = name;
     copy.type = type;
     copy.optimized = optimized;
-    copy.value = value;
+    
+    copy.object = object;
+    copy.parent = parent;
     
     return copy;
+}
+
+- (void) addObject:(NSObject *)obj
+{
+    NSMutableArray * array = [self children];
+    if (array)
+    {
+        if ([obj isKindOfClass:[CustomPropSetting class]])
+        {
+            [(CustomPropSetting*)obj setName:[NSString stringWithFormat:@"item %d", [self childrenCount]]];
+        }
+        [array addObject:obj];
+    }
 }
 
 @end

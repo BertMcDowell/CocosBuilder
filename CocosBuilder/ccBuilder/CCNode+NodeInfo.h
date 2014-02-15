@@ -24,6 +24,7 @@
 
 #import "cocos2d.h"
 
+@class CustomPropSetting;
 @class PlugInNode;
 @class SequencerNodeProperty;
 @class SequencerKeyframe;
@@ -69,6 +70,7 @@
 - (id) serializeAnimatedProperties;
 - (void) loadAnimatedPropertiesFromSerialization:(id)ser;
 
+- (CustomPropSetting*) customPropertyWithName:(NSString*)name;
 - (NSString*) customPropertyNamed:(NSString*)name;
 - (void) setCustomPropertyNamed:(NSString*)name value:(NSString*)value;
 

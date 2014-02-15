@@ -24,12 +24,11 @@
 
 #import "CustomPropSettingsWindow.h"
 #import "CustomPropSetting.h"
+#import "CustomPropSettings.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 
-@interface CustomPropSettingsWindow ()
 
-@end
 
 @implementation CustomPropSettingsWindow
 
@@ -40,10 +39,26 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
-        self.settings = [NSMutableArray array];
+        settings = [[CustomPropSettings settings] retain];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:@"CustomPropSettingsTypeChanged"
+                                                          object:Nil
+                                                           queue:Nil
+                                                      usingBlock:^(NSNotification *notification){
+                                                        [outline reloadData];
+                                                      }];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [settings release];
+    [outline release];
+    [indexpaths release];
+    
+    [super dealloc];
 }
 
 - (void) copySettingsForNode:(CCNode *)n
@@ -51,11 +66,49 @@
     node = n;
     
     [settings release];
-    settings = [[NSMutableArray arrayWithCapacity:[node.customProperties count]] retain];
+    settings = [[CustomPropSettings settingsWithCapacity:[node.customProperties count]] retain];
     
     for (CustomPropSetting* setting in node.customProperties)
     {
         [settings addObject:[[setting copy] autorelease]];
+    }
+}
+
+- (CustomPropSettings*) settings
+{
+    return settings;
+}
+
+- (NSArray*) selectionIndexPaths
+{
+    return indexpaths;
+}
+
+- (void) setSelectionIndexPaths:(NSArray *)selectionIndexPaths
+{
+    [indexpaths release];
+    indexpaths = [selectionIndexPaths retain];
+    
+    
+    NSLog(@"%@", [indexpaths class]);
+    
+    NSInteger count = [indexpaths count];
+    if (count > 0)
+    {
+        NSIndexPath * path = [indexpaths lastObject];
+        
+        NSUInteger array[count];
+        [path getIndexes: array];
+    
+        NSObject * obj = [outline itemAtRow:array[count-1]];
+        if ([obj isKindOfClass:[NSTreeNode class]])
+        {
+            [settings setSelected:((NSTreeNode*)obj).representedObject];
+        }
+    }
+    else
+    {
+        [settings setSelected:nil];
     }
 }
 
@@ -109,12 +162,6 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
-- (void) dealloc
-{
-    self.settings = NULL;
-    [super dealloc];
 }
 
 @end

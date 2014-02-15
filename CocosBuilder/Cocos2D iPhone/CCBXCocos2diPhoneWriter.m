@@ -1033,6 +1033,11 @@
             type = @"String";
             value = customValue;
         }
+        else if (customType == kCCBCustomPropTypeArray)
+        {
+            type = @"Array";
+            value = customValue;
+        }
         
         NSAssert(type, @"Failed to find custom type");
         

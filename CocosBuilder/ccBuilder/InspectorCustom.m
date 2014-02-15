@@ -28,6 +28,23 @@
 
 @implementation InspectorCustom
 
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
+    [self setReadOnly:[self readOnly]];
+}
+
+- (void) setReadOnly:(BOOL)value
+{
+    [super setReadOnly:value];
+    
+    [textField setEditable:!value];
+    [textField setEditable:!value];
+    [textField setEnabled:!value];
+    [textField setDrawsBackground:!value];
+    [textField setBezeled:!value];
+}
+
 - (void) setText:(NSString *)text
 {
     if (!text) text = @"";

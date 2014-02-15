@@ -1573,7 +1573,7 @@ CA
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view id="608" userLabel="View">
-                                            <rect key="frame" x="0.0" y="0.0" width="233" height="550"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="249" height="678"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </view>
                                     </subviews>
@@ -1582,7 +1582,7 @@ CA
                                     <rect key="frame" x="-100" y="-100" width="183" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="606">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="606">
                                     <rect key="frame" x="284" y="1" width="15" height="678"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

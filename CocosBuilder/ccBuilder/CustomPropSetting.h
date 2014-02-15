@@ -30,24 +30,38 @@ enum
     kCCBCustomPropTypeFloat,
     kCCBCustomPropTypeBool,
     kCCBCustomPropTypeString,
+    kCCBCustomPropTypeArray,
 };
 
 @interface CustomPropSetting : NSObject
 {
     NSString* name;
     int type;
-    NSString* value;
     BOOL optimized;
+    
+    NSObject* parent;
+    NSObject* object;
 }
+
+@property (nonatomic,retain) NSObject* parent;
+@property (nonatomic,retain) NSObject* object;
+
+@property (nonatomic,readonly) NSMutableArray* children;
+@property (nonatomic,readonly) int childrenCount;
+@property (nonatomic,readonly) BOOL isLeaf;
+
+@property (nonatomic,readonly) BOOL nameEditable;
+@property (nonatomic,readonly) BOOL valueEditable;
 
 @property (nonatomic,copy) NSString* name;
 @property (nonatomic,assign) int type;
 @property (nonatomic,assign) BOOL optimized;
+
 @property (nonatomic,copy) NSString* value;
 
 - (id) initWithSerialization:(id)ser;
 - (id) serialization;
 
-- (NSString*) formatValue:(NSString*) val;
+- (void) addObject:(NSObject *)object;
 
 @end

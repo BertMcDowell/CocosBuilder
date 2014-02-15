@@ -147,6 +147,12 @@
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		A77EF590171FD30E00451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		A77EF594171FD3B200451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
+		CC54C13B189320E800B0BF89 /* CustomPropSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = CC54C13A189320E800B0BF89 /* CustomPropSettings.m */; };
+		CC54C13E189321D300B0BF89 /* CustomPropSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = CC54C13A189320E800B0BF89 /* CustomPropSettings.m */; };
+		CC54C14418942DC000B0BF89 /* CustomPropSettingsTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC54C14318942DC000B0BF89 /* CustomPropSettingsTreeController.m */; };
+		CC6F8E3F18AFD2D40063949A /* NSTextFieldCellVertical.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6F8E3E18AFD2D40063949A /* NSTextFieldCellVertical.m */; };
+		CC6F8E4218AFD8540063949A /* InspectorCustomArray.m in Sources */ = {isa = PBXBuildFile; fileRef = CC6F8E4118AFD8540063949A /* InspectorCustomArray.m */; };
+		CC6F8E4418AFD9430063949A /* InspectorCustomArray.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC6F8E4318AFD9430063949A /* InspectorCustomArray.xib */; };
 		CCF8DF7D1881AF630007DF40 /* TB_build.png in Resources */ = {isa = PBXBuildFile; fileRef = CCF8DF7B1881AF630007DF40 /* TB_build.png */; };
 		CCF8DF7E1881AF630007DF40 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCF8DF7C1881AF630007DF40 /* TB_build@2x.png */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
@@ -1082,6 +1088,15 @@
 		A09AB6AE14E9935F009C8B91 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		A77EF58F171FD30E00451DA4 /* cwebp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = cwebp; sourceTree = "<group>"; };
+		CC54C139189320E800B0BF89 /* CustomPropSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPropSettings.h; sourceTree = "<group>"; };
+		CC54C13A189320E800B0BF89 /* CustomPropSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPropSettings.m; sourceTree = "<group>"; };
+		CC54C14218942DC000B0BF89 /* CustomPropSettingsTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPropSettingsTreeController.h; sourceTree = "<group>"; };
+		CC54C14318942DC000B0BF89 /* CustomPropSettingsTreeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPropSettingsTreeController.m; sourceTree = "<group>"; };
+		CC6F8E3D18AFD2D40063949A /* NSTextFieldCellVertical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTextFieldCellVertical.h; sourceTree = "<group>"; };
+		CC6F8E3E18AFD2D40063949A /* NSTextFieldCellVertical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTextFieldCellVertical.m; sourceTree = "<group>"; };
+		CC6F8E4018AFD8540063949A /* InspectorCustomArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorCustomArray.h; sourceTree = "<group>"; };
+		CC6F8E4118AFD8540063949A /* InspectorCustomArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCustomArray.m; sourceTree = "<group>"; };
+		CC6F8E4318AFD9430063949A /* InspectorCustomArray.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorCustomArray.xib; sourceTree = "<group>"; };
 		CCF8DF7B1881AF630007DF40 /* TB_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_build.png; sourceTree = "<group>"; };
 		CCF8DF7C1881AF630007DF40 /* TB_build@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TB_build@2x.png"; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
@@ -2139,6 +2154,8 @@
 				E3EDBC241549971000EEF1F3 /* CCBFileUtil.m */,
 				E3462869155C18D80043EAB1 /* SavePanelLimiter.h */,
 				E346286A155C18D80043EAB1 /* SavePanelLimiter.m */,
+				CC6F8E3D18AFD2D40063949A /* NSTextFieldCellVertical.h */,
+				CC6F8E3E18AFD2D40063949A /* NSTextFieldCellVertical.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2843,6 +2860,10 @@
 				E3214C4315D3C29D002413A7 /* CustomPropSettingsWindow.m */,
 				E3214C4515D3C3AF002413A7 /* CustomPropSetting.h */,
 				E3214C4615D3C3AF002413A7 /* CustomPropSetting.m */,
+				CC54C139189320E800B0BF89 /* CustomPropSettings.h */,
+				CC54C13A189320E800B0BF89 /* CustomPropSettings.m */,
+				CC54C14218942DC000B0BF89 /* CustomPropSettingsTreeController.h */,
+				CC54C14318942DC000B0BF89 /* CustomPropSettingsTreeController.m */,
 			);
 			name = "Custom Properties";
 			sourceTree = "<group>";
@@ -3721,6 +3742,9 @@
 				E3214C4815D40F01002413A7 /* InspectorCustom.h */,
 				E3214C4915D40F01002413A7 /* InspectorCustom.m */,
 				E3214C4A15D40F01002413A7 /* InspectorCustom.xib */,
+				CC6F8E4018AFD8540063949A /* InspectorCustomArray.h */,
+				CC6F8E4118AFD8540063949A /* InspectorCustomArray.m */,
+				CC6F8E4318AFD9430063949A /* InspectorCustomArray.xib */,
 				E3214C5A15D54355002413A7 /* InspectorCustomEdit.h */,
 				E3214C5B15D54355002413A7 /* InspectorCustomEdit.m */,
 				E3214C5C15D54355002413A7 /* InspectorCustomEdit.xib */,
@@ -4719,6 +4743,7 @@
 				E38F79361715FD8D00E299E4 /* editor-warning.png in Resources */,
 				E373BF1117189D2E00D71602 /* autoCompleteDefinitions in Resources */,
 				E3C12B1F171E0DE7001EEDDB /* editor-check.png in Resources */,
+				CC6F8E4418AFD9430063949A /* InspectorCustomArray.xib in Resources */,
 				E388FD19171F03C7002548ED /* editor-border.png in Resources */,
 				E3748303171F83A300486659 /* editor-jump.png in Resources */,
 				E39C917B174C134C00092BD1 /* toolbar-btn-add.png in Resources */,
@@ -4926,6 +4951,7 @@
 				835DB0A1171562D6003A2F7B /* MultipartMessageHeaderField.m in Sources */,
 				835DB0A3171562D6003A2F7B /* HTTPAsyncFileResponse.m in Sources */,
 				835DB0A5171562D6003A2F7B /* HTTPDataResponse.m in Sources */,
+				CC6F8E4218AFD8540063949A /* InspectorCustomArray.m in Sources */,
 				835DB0A7171562D6003A2F7B /* HTTPDynamicFileResponse.m in Sources */,
 				835DB0A9171562D6003A2F7B /* HTTPErrorResponse.m in Sources */,
 				835DB0AB171562D6003A2F7B /* HTTPFileResponse.m in Sources */,
@@ -5118,6 +5144,7 @@
 				E3B9AF4E153C48E300489438 /* CCBTransparentView.m in Sources */,
 				E3F3F83F153C72A3005443EE /* NotesLayer.m in Sources */,
 				E3F3F843153C7700005443EE /* StickyNote.m in Sources */,
+				CC54C14418942DC000B0BF89 /* CustomPropSettingsTreeController.m in Sources */,
 				E35A2D9C1540207000F78B72 /* PositionPropertySetter.m in Sources */,
 				E3EDBC101546D23000EEF1F3 /* ResolutionSetting.m in Sources */,
 				E3EDBC1415483E3200EEF1F3 /* ResolutionSettingsWindow.m in Sources */,
@@ -5166,6 +5193,7 @@
 				E33C2AB815CAE3980043EF9B /* SequencerStretchWindow.m in Sources */,
 				E3214C4415D3C29D002413A7 /* CustomPropSettingsWindow.m in Sources */,
 				E3214C4715D3C3AF002413A7 /* CustomPropSetting.m in Sources */,
+				CC54C13E189321D300B0BF89 /* CustomPropSettings.m in Sources */,
 				E3214C4B15D40F01002413A7 /* InspectorCustom.m in Sources */,
 				E3214C5D15D54356002413A7 /* InspectorCustomEdit.m in Sources */,
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,
@@ -5193,6 +5221,7 @@
 				E334740D169C5402000737CC /* CCControlColourPicker.m in Sources */,
 				E334740E169C5402000737CC /* CCControlHuePicker.m in Sources */,
 				E334740F169C5402000737CC /* CCControlPotentiometer.m in Sources */,
+				CC6F8E3F18AFD2D40063949A /* NSTextFieldCellVertical.m in Sources */,
 				E3347410169C5402000737CC /* CCControlSaturationBrightnessPicker.m in Sources */,
 				E3347411169C5402000737CC /* CCControlSlider.m in Sources */,
 				E3347412169C5402000737CC /* CCControlStepper.m in Sources */,
@@ -5300,6 +5329,7 @@
 			files = (
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
+				CC54C13B189320E800B0BF89 /* CustomPropSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

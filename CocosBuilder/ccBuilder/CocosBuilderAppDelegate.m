@@ -724,6 +724,7 @@ static BOOL hideAllToNextSeparator;
         NSLog(@"WARNING info:%@ plugIn:%@ selectedNode: %@", info, plugIn, self.selectedNode);
     }
     
+
     // Custom properties
     NSString* customClass = [self.selectedNode extraPropForKey:@"customClass"];
     NSArray* customProps = self.selectedNode.customProperties;
@@ -736,7 +737,9 @@ static BOOL hideAllToNextSeparator;
         
         for (CustomPropSetting* setting in customProps)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"Custom" name:setting.name displayName:setting.name extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset];
+            NSString * typeValue = (setting.type == kCCBCustomPropTypeArray) ? @"CustomArray" : @"Custom";
+            
+            paneOffset = [self addInspectorPropertyOfType:typeValue name:setting.name displayName:setting.name extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset];
         }
         
         if (!isCCBSubFile)
@@ -744,7 +747,7 @@ static BOOL hideAllToNextSeparator;
             paneOffset = [self addInspectorPropertyOfType:@"CustomEdit" name:NULL displayName:@"" extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset];
         }
     }
-    
+
     hideAllToNextSeparator = NO;
     
     /*
