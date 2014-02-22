@@ -65,6 +65,7 @@
     [propTypes addObject:@"BlockCCControl"];
     [propTypes addObject:@"FloatScale"];
     [propTypes addObject:@"FloatXY"];
+    [propTypes addObject:@"Array"];
 }
 
 - (id) init
@@ -241,6 +242,12 @@
     [data appendData:dataStr];
 }
 
+- (void) writeArray:(id)array
+{
+    
+    
+}
+
 - (void) writeCachedString:(NSString*) str isPath:(BOOL) isPath
 {
     if (isPath && flattenPaths)
@@ -294,7 +301,11 @@
         [self writeByte:kCCBXPlatformAll];
     }
     
-    if ([type isEqualToString:@"Position"])
+    if ([type isEqualToString:@"Array"])
+    {
+        [self writeArray:prop];
+    }
+    else if ([type isEqualToString:@"Position"])
     {
         float a = [[prop objectAtIndex:0] floatValue];
         float b = [[prop objectAtIndex:1] floatValue];

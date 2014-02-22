@@ -26,6 +26,8 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+extern NSString * ccbDocumentClose;
+
 @interface CCBDocument : NSObject {
     NSString* fileName;
     NSString* exportPath;
@@ -61,4 +63,5 @@
 @property (nonatomic,assign) int currentResolution;
 @property (nonatomic,retain) NSMutableArray* sequences;
 @property (nonatomic,assign) int currentSequenceId;
+
 @end

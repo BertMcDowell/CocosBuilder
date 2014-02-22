@@ -26,6 +26,8 @@
 #import "CCBDocument.h"
 #import "ResolutionSetting.h"
 
+NSString * ccbDocumentClose = @"ccbDocumentClose";
+
 @implementation CCBDocument
 
 @synthesize fileName;

@@ -335,6 +335,18 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+    else
+    {
+        NSArray * recentDocumentURLs = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
+        if ([recentDocumentURLs count] > 0)
+        {
+            NSURL * url = [recentDocumentURLs objectAtIndex:0];
+            if (url && [[NSFileManager defaultManager] fileExistsAtPath:[url path]])
+            {
+                [self openProject:[url path]];
+            }
+        }
+    }
 }
 
 #pragma mark Notifications to user
@@ -420,6 +432,10 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem
 {
     CCBDocument* doc = [tabViewItem identifier];
+    
+    // Remove the tab from the project settings.
+    [[self.projectSettings openDocuments] removeObject:doc.fileName];
+    [self.projectSettings store];
     
     if (doc.isDirty)
     {
@@ -1324,7 +1340,14 @@ static BOOL hideAllToNextSeparator;
     
     // Open ccb file for project if there is only one
     NSArray* resPaths = project.absoluteResourcePaths;
-    if (resPaths.count > 0)
+    if (project.openDocuments.count > 0)
+    {
+        for (NSString * fileName in projectSettings.openDocuments)
+        {
+            [self openFile:fileName];
+        }
+    }
+    else if (resPaths.count > 0)
     {
         NSString* resPath = [resPaths objectAtIndex:0];
         
@@ -1363,6 +1386,13 @@ static BOOL hideAllToNextSeparator;
     {
         [tabView selectTabViewItem:[self tabViewItemFromDoc:openDoc]];
         return;
+    }
+    
+    // save the open files in the project settings
+    if (![[self.projectSettings openDocuments] containsObject:fileName])
+    {
+        [[self.projectSettings openDocuments] addObject:fileName];
+        [self.projectSettings store];
     }
     
     [self prepareForDocumentSwitch];

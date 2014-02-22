@@ -52,7 +52,33 @@
     self.name = [ser objectForKey:@"name"];
     self.type = [[ser objectForKey:@"type"] intValue];
     self.optimized = [[ser objectForKey:@"optimized"] boolValue];
-    //self.value = [ser objectForKey:@"value"];
+
+    NSObject * obj = [ser objectForKey:@"value"];
+    if (type == kCCBCustomPropTypeArray)
+    {
+        NSMutableArray * array = [NSMutableArray array];
+        
+        if ([obj isKindOfClass:[NSArray class]] )
+        {
+            NSArray * items = (NSArray*)obj;
+            for (NSObject * item in items)
+            {
+                CustomPropSetting * setting = [[CustomPropSetting alloc] initWithSerialization:item];
+                [array addObject:setting];
+            }
+        }
+        
+        self.object = array;
+    }
+    else if ([obj isKindOfClass:[NSString class]] )
+    {
+        self.object = [self formatValue:(NSString*)obj];
+    }
+    else  if ([obj isKindOfClass:[NSNumber class]] )
+    {
+        self.object = obj;
+    }
+    
     
     return self;
 }
@@ -64,7 +90,22 @@
     [ser setObject:name forKey:@"name"];
     [ser setObject:[NSNumber numberWithInt:type] forKey:@"type"];
     [ser setObject:[NSNumber numberWithBool:optimized] forKey:@"optimized"];
-    //[ser setObject:value forKey:@"value"];
+    
+    if (type == kCCBCustomPropTypeArray)
+    {
+        NSMutableArray * array = [NSMutableArray array];
+        
+        for (CustomPropSetting * settings in [self children])
+        {
+            [array addObject:[settings serialization]];
+        }
+        
+        [ser setObject:array forKey:@"value"];
+    }
+    else
+    {
+      [ser setObject:object forKey:@"value"];
+    }
     
     return ser;
 }
