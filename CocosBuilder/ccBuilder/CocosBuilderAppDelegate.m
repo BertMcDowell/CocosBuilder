@@ -420,6 +420,12 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 
 - (void)tabView:(NSTabView *)aTabView didCloseTabViewItem:(NSTabViewItem *)tabViewItem
 {
+    CCBDocument* doc = [tabViewItem identifier];
+    
+    // Remove the tab from the project settings.
+    [[self.projectSettings openDocuments] removeObject:doc.fileName];
+    [self.projectSettings store];
+    
     if ([[aTabView tabViewItems] count] == 0)
     {
         [self closeLastDocument];
@@ -432,10 +438,6 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 - (BOOL)tabView:(NSTabView *)aTabView shouldCloseTabViewItem:(NSTabViewItem *)tabViewItem
 {
     CCBDocument* doc = [tabViewItem identifier];
-    
-    // Remove the tab from the project settings.
-    [[self.projectSettings openDocuments] removeObject:doc.fileName];
-    [self.projectSettings store];
     
     if (doc.isDirty)
     {
@@ -462,6 +464,17 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 - (BOOL)tabView:(NSTabView *)aTabView shouldDragTabViewItem:(NSTabViewItem *)tabViewItem fromTabBar:(PSMTabBarControl *)tabBarControl
 {
     return YES;
+}
+
+- (void)tabView:(NSTabView*)aTabView didDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl
+{
+    // Update the order of the open documents
+    CCBDocument* doc = [tabViewItem identifier];
+    [[self.projectSettings openDocuments] removeObject:doc.fileName];
+    [[self.projectSettings openDocuments] insertObject:doc.fileName atIndex:[aTabView indexOfTabViewItem:tabViewItem]];
+    [self.projectSettings store];
+    
+    //NSAssert(0, @"");
 }
 
 #pragma mark Handling selections
