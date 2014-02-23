@@ -244,8 +244,64 @@
 
 - (void) writeArray:(id)array
 {
+    NSAssert([array isKindOfClass:[NSArray class]], @"ccbi export: Trying to write array that is not an array.");
     
+    NSArray * items = (NSArray*)array;
     
+    // write the number of elements
+    [self writeInt:(int)[items count] withSign:NO];
+    
+    for (NSDictionary * item in items)
+    {
+        NSObject * type = [item objectForKey:@"type"];
+        id value = [item objectForKey:@"value"];
+        
+        int typeId = -1;
+        if ([type isKindOfClass:[NSNumber class]])
+        {
+            int customType = [(NSNumber*)type intValue];
+            
+            if (customType == kCCBCustomPropTypeInt)
+            {
+                type = @"Integer";
+                value = [NSNumber numberWithInt:[value intValue]];
+            }
+            else if (customType == kCCBCustomPropTypeFloat)
+            {
+                type = @"Float";
+                value = [NSNumber numberWithFloat:[value floatValue]];
+            }
+            else if (customType == kCCBCustomPropTypeBool)
+            {
+                type = @"Check";
+                value = [NSNumber numberWithBool:[value boolValue]];
+            }
+            else if (customType == kCCBCustomPropTypeString)
+            {
+                type = @"String";
+            }
+            else if (customType == kCCBCustomPropTypeArray)
+            {
+                type = @"Array";
+            }
+        }
+
+        if ([type isKindOfClass:[NSString class]])
+        {
+            typeId = [self propTypeIdForName:(NSString*)type];
+        }
+        else
+        {
+            type = @""; // not a known type set to an empty string
+        }
+        
+        // Property type
+        [self writeInt:typeId withSign:NO];
+        
+        // write the propetry value
+        [self writeProperty:value type:(NSString*)type];
+        
+    }
 }
 
 - (void) writeCachedString:(NSString*) str isPath:(BOOL) isPath
@@ -301,6 +357,11 @@
         [self writeByte:kCCBXPlatformAll];
     }
     
+    [self writeProperty:prop type:type];
+}
+
+- (void) writeProperty:(id) prop type:(NSString*)type
+{
     if ([type isEqualToString:@"Array"])
     {
         [self writeArray:prop];
