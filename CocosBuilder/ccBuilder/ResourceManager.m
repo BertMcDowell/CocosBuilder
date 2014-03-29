@@ -861,14 +861,24 @@
     BOOL save8BitPNG = NO;
     
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(imageSrc);
-    if (CGColorSpaceGetModel(colorSpace) == kCGColorSpaceModelIndexed)
+    CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(colorSpace);
+    CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
+    NSInteger bitsPerComponent = CGImageGetBitsPerComponent(imageSrc);
+    NSInteger bytesPerPixel = CGImageGetBitsPerPixel(imageSrc);
+    NSInteger bytesPerRow = wDst*bytesPerPixel;
+    if (colorSpaceModel == kCGColorSpaceModelIndexed)
     {
         colorSpace = CGColorSpaceCreateDeviceRGB();
         save8BitPNG = YES;
     }
+    else if (colorSpaceModel == kCGColorSpaceModelMonochrome)
+    {
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+//        bitmapInfo = kCGImageAlphaNone;
+    }
     
     // Create new, scaled image
-    CGContextRef newContext = CGBitmapContextCreate(NULL, wDst, hDst, 8, wDst*32, colorSpace, kCGImageAlphaPremultipliedLast);
+    CGContextRef newContext = CGBitmapContextCreate(NULL, wDst, hDst, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo);
     
     // Enable anti-aliasing
     CGContextSetInterpolationQuality(newContext, kCGInterpolationHigh);
@@ -894,7 +904,7 @@
     CFRelease(destination);
     CGImageRelease(imageSrc);
     CFRelease(dataProvider);
-    CFRelease(newContext);
+    if (newContext!=nil) { CFRelease(newContext); }
     
     // Convert file to 8 bit if original uses indexed colors
     if (save8BitPNG)
