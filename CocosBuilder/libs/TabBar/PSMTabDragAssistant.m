@@ -570,7 +570,9 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 			drawPoint.x += [control frame].size.width - [tabImage size].width;
 		}
 
-		[tabImage compositeToPoint:drawPoint operation:NSCompositeSourceOver];
+        NSSize imageSize = [tabImage size];
+        NSRect drawRect = NSMakeRect(drawPoint.x, drawPoint.y, imageSize.width, imageSize.height);
+        [tabImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f respectFlipped:YES hints:nil];
 
 		[viewImage unlockFocus];
 	} else {

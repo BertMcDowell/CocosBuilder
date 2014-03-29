@@ -364,13 +364,17 @@
 	[image addRepresentation:rep];
 	NSImage *returnImage = [[[NSImage alloc] initWithSize:[rep size]] autorelease];
 	[returnImage lockFocus];
-	[image compositeToPoint:NSMakePoint(0.0, 0.0) operation:NSCompositeSourceOver fraction:1.0];
+    NSSize imageSize = [rep size];
+    NSRect drawRect = NSMakeRect(0, 0, imageSize.width, imageSize.height);
+    [image drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f respectFlipped:YES hints:nil];
 	[returnImage unlockFocus];
 	if(![[self indicator] isHidden]) {
 		NSImage *pi = [[NSImage alloc] initByReferencingFile:[[PSMTabBarControl bundle] pathForImageResource:@"pi"]];
 		[returnImage lockFocus];
 		NSPoint indicatorPoint = NSMakePoint([self frame].size.width - MARGIN_X - kPSMTabBarIndicatorWidth, MARGIN_Y);
-		[pi compositeToPoint:indicatorPoint operation:NSCompositeSourceOver fraction:1.0];
+        imageSize = [pi size];
+        drawRect = NSMakeRect(indicatorPoint.x, indicatorPoint.y, imageSize.width, imageSize.height);
+        [pi drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0f respectFlipped:YES hints:nil];
 		[returnImage unlockFocus];
 		[pi release];
 	}
